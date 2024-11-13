@@ -1,0 +1,18 @@
+SELECT 
+    categories.name AS category_name,
+    COUNT(*) AS total_orders,
+    AVG(order_details.quantity) AS average_quantity
+FROM 
+    orders
+LEFT JOIN 
+    order_details ON orders.id = order_details.order_id
+LEFT JOIN 
+    products ON order_details.product_id = products.id
+LEFT JOIN 
+    categories ON products.category_id = categories.id
+GROUP BY 
+    categories.name
+HAVING 
+    AVG(order_details.quantity) > 21
+ORDER BY 
+    total_orders DESC;
